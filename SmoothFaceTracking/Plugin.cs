@@ -15,22 +15,22 @@ public class SmoothFaceTracking : ResoniteMod
     public override string Link => "https://github.com/InfernoEye/ResoSmoothFT";
 
     [AutoRegisterConfigKey]
-    private static readonly ModConfigurationKey<bool> EYE_SMOOTHING_ENABLED = new("Enable Eye Smoothing", "Enables smoothing on eye tracking", () => true);
+    private static ModConfigurationKey<bool> EYE_SMOOTHING_ENABLED = new("Enable Eye Smoothing", "Enables smoothing on eye tracking", () => true);
     [AutoRegisterConfigKey]
-    private static readonly ModConfigurationKey<float> EYE_SMOOTHING_SPEED = new("Eye Smoothing Speed", "How fast to smooth eye tracking", () => 20f);
+    private static ModConfigurationKey<float> EYE_SMOOTHING_SPEED = new("Eye Smoothing Speed", "How fast to smooth eye tracking", () => 20f);
     [AutoRegisterConfigKey]
-    private static readonly ModConfigurationKey<bool> MOUTH_SMOOTHING_ENABLED = new("Enable Mouth Smoothing", "Enables smoothing on mouth tracking", () => true);
+    private static ModConfigurationKey<bool> MOUTH_SMOOTHING_ENABLED = new("Enable Mouth Smoothing", "Enables smoothing on mouth tracking", () => true);
     [AutoRegisterConfigKey]
-    private static readonly ModConfigurationKey<float> MOUTH_SMOOTHING_SPEED = new("Mouth Smoothing Speed", "How fast to smooth mouth tracking", () => 20f);
+    private static ModConfigurationKey<float> MOUTH_SMOOTHING_SPEED = new("Mouth Smoothing Speed", "How fast to smooth mouth tracking", () => 20f);
 
     private static readonly ConditionalWeakTable<EyeTrackingStreamManager.EyeStreams, EyeSmoothing> EYE_SMOOTHING_STORAGE = [];
     private static readonly ConditionalWeakTable<MouthTrackingStreamManager, MouthSmoothing> MOUTH_SMOOTHING_STORAGE = [];
 
-    private static ModConfiguration Config;
+    private static ModConfiguration? Config;
     public override void OnEngineInit()
 	{
         Config = GetConfiguration();
-        Config.Save(true);
+        Config?.Save(true);
 		Harmony harmony = new Harmony("InfernoEye.SmoothFaceTracking");
         harmony.PatchAll();
 	}
