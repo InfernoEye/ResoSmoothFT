@@ -12,5 +12,3 @@ Once installed, your face tracking will be smoothed by default.
 Smoothing speed and toggles can be found in your settings under (For that you need [ResoniteModSettings](https://github.com/badhaloninja/ResoniteModSettings/releases/latest/download/ResoniteModSettings.dll
 )) `Mods > SmoothFaceTracking`.
 
-Original:
-[![Thunderstore Badge](https://modding.resonite.net/assets/available-on-thunderstore.svg)](https://thunderstore.io/c/resonite/)
