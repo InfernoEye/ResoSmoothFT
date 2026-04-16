@@ -8,7 +8,7 @@ using HarmonyLib;
 namespace SmoothFaceTracking;
 public class SmoothFaceTracking : ResoniteMod
 {
-    internal const string VERSION_CONSTANT = "1.0.0"; // Version of the mod
+    internal const string VERSION_CONSTANT = "1.0.1"; // Version of the mod
     public override string Name => "SmoothFaceTracking";
     public override string Author => "ForgottenSin(InfernoEye)"; // Original by Purpzie
     public override string Version => VERSION_CONSTANT;
