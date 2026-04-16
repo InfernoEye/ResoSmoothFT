@@ -1,4 +1,4 @@
-# SmoothFaceTracking
+# SmoothFaceTracking port to RML Original by [Purpzie](https://github.com/Purpzie/ResoSmoothFT)
 
 A [ResoniteModLoader](https://github.com/resonite-modding-group/ResoniteModLoader) mod for [Resonite](https://resonite.com/) that smooths your face tracking locally before it gets synced with other players.
 
