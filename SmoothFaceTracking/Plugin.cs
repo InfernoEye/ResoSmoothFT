@@ -1,35 +1,38 @@
 ﻿using System.Runtime.CompilerServices;
-using BepInEx;
-using BepInEx.Configuration;
-using BepInEx.NET.Common;
-using BepInExResoniteShim;
+using ResoniteModLoader;
+using Renderite;
 using Elements.Core;
 using FrooxEngine;
 using HarmonyLib;
 
 namespace SmoothFaceTracking;
-
-[ResonitePlugin(PluginMetadata.GUID, PluginMetadata.NAME, PluginMetadata.VERSION, PluginMetadata.AUTHORS, PluginMetadata.REPOSITORY_URL)]
-[BepInDependency(BepInExResoniteShim.PluginMetadata.GUID, BepInDependency.DependencyFlags.HardDependency)]
-public class Plugin : BasePlugin
+public class SmoothFaceTracking : ResoniteMod
 {
-	#nullable disable
-	private static ConfigEntry<bool> EYE_SMOOTHING_ENABLED;
-	private static ConfigEntry<float> EYE_SMOOTHING_SPEED;
-	private static ConfigEntry<bool> MOUTH_SMOOTHING_ENABLED;
-	private static ConfigEntry<float> MOUTH_SMOOTHING_SPEED;
-	#nullable enable
+    internal const string VERSION_CONSTANT = "1.0.0"; // Version of the mod
+    public override string Name => "SmoothFaceTracking";
+    public override string Author => "Port to RML by ForgottenSin(InfernoEye), Original by Purpzie";
+    public override string Version => VERSION_CONSTANT;
+    public override string Link => "https://github.com/InfernoEye/ResoSmoothFT";
 
-	private static readonly ConditionalWeakTable<EyeTrackingStreamManager.EyeStreams, EyeSmoothing> EYE_SMOOTHING_STORAGE = [];
-	private static readonly ConditionalWeakTable<MouthTrackingStreamManager, MouthSmoothing> MOUTH_SMOOTHING_STORAGE = [];
+    [AutoRegisterConfigKey]
+    private static readonly ModConfigurationKey<bool> EYE_SMOOTHING_ENABLED = new("Enable Eye Smoothing", "Enables smoothing on eye tracking", () => true);
+    [AutoRegisterConfigKey]
+    private static readonly ModConfigurationKey<float> EYE_SMOOTHING_SPEED = new("Eye Smoothing Speed", "How fast to smooth eye tracking", () => 20f);
+    [AutoRegisterConfigKey]
+    private static readonly ModConfigurationKey<bool> MOUTH_SMOOTHING_ENABLED = new("Enable Mouth Smoothing", "Enables smoothing on mouth tracking", () => true);
+    [AutoRegisterConfigKey]
+    private static readonly ModConfigurationKey<float> MOUTH_SMOOTHING_SPEED = new("Mouth Smoothing Speed", "How fast to smooth mouth tracking", () => 20f);
 
-	public override void Load()
+    private static readonly ConditionalWeakTable<EyeTrackingStreamManager.EyeStreams, EyeSmoothing> EYE_SMOOTHING_STORAGE = [];
+    private static readonly ConditionalWeakTable<MouthTrackingStreamManager, MouthSmoothing> MOUTH_SMOOTHING_STORAGE = [];
+
+    private static ModConfiguration Config;
+    public override void OnEngineInit()
 	{
-		EYE_SMOOTHING_ENABLED = Config.Bind("Eyes", "Enable Eye Smoothing", true, "Enables smoothing on eye tracking");
-		EYE_SMOOTHING_SPEED = Config.Bind("Eyes", "Eye Smoothing Speed", 20f, "How fast to smooth eye tracking");
-		MOUTH_SMOOTHING_ENABLED = Config.Bind("Mouth", "Enable Mouth Smoothing", true, "Enables smoothing on mouth tracking");
-		MOUTH_SMOOTHING_SPEED = Config.Bind("Mouth", "Mouth Smoothing Speed", 20f, "How fast to smooth mouth tracking");
-		HarmonyInstance.PatchAll();
+        Config = GetConfiguration();
+        Config.Save(true);
+		Harmony harmony = new Harmony("InfernoEye.SmoothFaceTracking");
+        harmony.PatchAll();
 	}
 
 	[HarmonyPatch(typeof(EyeTrackingStreamManager.EyeStreams))]
