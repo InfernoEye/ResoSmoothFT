@@ -10,7 +10,7 @@ public class SmoothFaceTracking : ResoniteMod
 {
     internal const string VERSION_CONSTANT = "1.0.0"; // Version of the mod
     public override string Name => "SmoothFaceTracking";
-    public override string Author => "Port to RML by ForgottenSin(InfernoEye), Original by Purpzie";
+    public override string Author => "ForgottenSin(InfernoEye)"; // Original by Purpzie
     public override string Version => VERSION_CONSTANT;
     public override string Link => "https://github.com/InfernoEye/ResoSmoothFT";
 
